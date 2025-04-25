@@ -1,6 +1,6 @@
 -- Ensure UTF-8 encoding by creating this file in a text editor with UTF-8 setting
 CREATE TABLE Persona (
-    id VARCHAR(15) PRIMARY KEY,
+    id INTEGER PRIMARY KEY IDENTITY(1,1),
     Fecha_nacimiento DATE,
     Correo VARCHAR(50),
     numero_Telefono VARCHAR(15),
@@ -224,5 +224,63 @@ BEGIN
     fecha_proxima_pago = p_fecha_proxima_pago
   WHERE id_persona = p_id;
 END;
-$$;
+$$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION create_person_client(
+    p_id_persona VARCHAR(15),
+    p_fecha_nacimiento DATE,
+    p_correo VARCHAR(50),
+    p_numero_telefono VARCHAR(15),
+    p_primer_nombre VARCHAR(50),
+    p_primer_apellido VARCHAR(50),
+    p_segundo_apellido VARCHAR(50),
+    p_id_gimnasio INTEGER,
+    p_id_estado_pago INTEGER,
+    p_fecha_inicio DATE,
+    p_fecha_proxima_pago DATE
+)
+RETURNS VARCHAR(15) AS $$
+BEGIN
+    -- 1. Insertar en la tabla persona
+    INSERT INTO persona (
+        id,
+        fecha_nacimiento,
+        correo,
+        numero_telefono,
+        primer_nombre,
+        primer_apellido,
+        segundo_apellido
+    )
+    VALUES (
+        p_id_persona,
+        p_fecha_nacimiento,
+        p_correo,
+        p_numero_telefono,
+        p_primer_nombre,
+        p_primer_apellido,
+        p_segundo_apellido
+    );
+
+    INSERT INTO cliente (
+        id_persona,
+        id_gimnasio,
+        id_estado_pago,
+        fecha_inicio,
+        fecha_proxima_pago
+    )
+    VALUES (
+        p_id_persona,
+        p_id_gimnasio,
+        p_id_estado_pago,
+        p_fecha_inicio,
+        p_fecha_proxima_pago
+    );
+
+    RETURN p_id_persona;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE EXCEPTION 'Error al registrar persona y cliente: %', SQLERRM;
+END;
+$$ LANGUAGE plpgsql;
+=======
+$$;
