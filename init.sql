@@ -195,7 +195,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE PROCEDURE update_user_info(
-  p_id INT,
+  p_id TEXT,
   p_primer_nombre VARCHAR,
   p_primer_apellido VARCHAR,
   p_segundo_apellido VARCHAR,
