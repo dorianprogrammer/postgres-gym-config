@@ -1,6 +1,6 @@
 -- Ensure UTF-8 encoding by creating this file in a text editor with UTF-8 setting
 CREATE TABLE Persona (
-    id INTEGER PRIMARY KEY IDENTITY(1,1),
+    id VARCHAR(15) PRIMARY KEY,
     Fecha_nacimiento DATE,
     Correo VARCHAR(50),
     numero_Telefono VARCHAR(15),
@@ -195,7 +195,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE PROCEDURE update_user_info(
-  p_id TEXT,
+  p_id INT,
   p_primer_nombre VARCHAR,
   p_primer_apellido VARCHAR,
   p_segundo_apellido VARCHAR,
@@ -205,11 +205,10 @@ CREATE OR REPLACE PROCEDURE update_user_info(
   p_fecha_proxima_pago DATE,
   p_id_estado_pago INT
 )
-LANGUAGE plpgsql
 AS $$
 BEGIN
   UPDATE persona
-  SET 
+  SET
     primer_nombre = p_primer_nombre,
     primer_apellido = p_primer_apellido,
     segundo_apellido = p_segundo_apellido,
@@ -225,6 +224,7 @@ BEGIN
   WHERE id_persona = p_id;
 END;
 $$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION create_person_client(
     p_id_persona VARCHAR(15),
@@ -282,5 +282,3 @@ EXCEPTION
         RAISE EXCEPTION 'Error al registrar persona y cliente: %', SQLERRM;
 END;
 $$ LANGUAGE plpgsql;
-=======
-$$;
