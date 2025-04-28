@@ -3,6 +3,7 @@ CREATE TABLE Persona (
     id VARCHAR(15) PRIMARY KEY,
     Fecha_nacimiento DATE,
     Correo VARCHAR(50),
+    tipo_correo VARCHAR(50) CHECK (tipo_correo IN ('Primario', 'Secundario')),
     numero_Telefono VARCHAR(15),
     primer_Nombre VARCHAR(50),
     primer_Apellido VARCHAR(50),
