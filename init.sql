@@ -321,3 +321,20 @@ BEGIN
     AND c.id_estado_pago = 2;
 END;
 $$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE PROCEDURE actualizar_estado_pago(
+    p_id_persona VARCHAR,
+    p_id_estado_pago INT,
+    p_fecha_proxima_pago DATE
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    UPDATE cliente
+    SET
+        id_estado_pago = p_id_estado_pago,
+        fecha_proxima_pago = p_fecha_proxima_pago
+    WHERE id_persona = p_id_persona;
+END;
+$$;
