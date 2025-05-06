@@ -254,7 +254,6 @@ INSERT INTO Catalogo_Pago (Estado, Descripcion)
 VALUES (1, 'Pagado'),
     (2, 'Pendiente'),
     (3, 'Inactivo');
-<<<<<<< HEAD
 INSERT INTO Cliente (
         id_persona,
         id_gimnasio,
@@ -313,36 +312,6 @@ VALUES (
     );
 INSERT INTO Detalle_Rutinas (id_entrenador, id_cliente, id_rutina)
 VALUES (1, 1, 1),
-=======
-
-INSERT INTO Cliente (id_persona, id_gimnasio, id_estado_pago, fecha_inicio, fecha_proxima_pago) VALUES
-    ('P004', 1, 2, '2023-01-10', '2025-05-28'),
-    ('P005', 1, 2, '2023-01-10', '2025-05-14'),
-    ('P006', 2, 2, '2023-01-10', '2025-05-20'),
-    ('P007', 2, 2, '2023-01-10', '2025-05-20'),
-    ('P008', 1, 2, '2023-01-10', '2025-05-30'),
-    ('P009', 1, 2, '2023-01-10', '2025-05-30'),
-    ('P010', 2, 2, '2023-01-10', '2025-05-15'),
-    ('P011', 1, 2, '2023-01-10', '2025-05-15'),
-    ('P012', 1, 2, '2023-01-10', '2025-05-04'),
-    ('P013', 2, 2, '2023-01-10', '2025-05-09'),
-    ('P014', 1, 2, '2023-01-10', '2025-05-10'),
-    ('P015', 2, 2, '2023-01-10', '2025-05-10'),
-    ('P016', 1, 2, '2023-01-10', '2025-05-30'),
-    ('P017', 2, 2, '2023-01-10', '2025-05-30');
-
-INSERT INTO Entrenador (id_persona, id_gimnasio, id_horario) VALUES
-    ('P018', 1, 1),
-    ('P019', 2, 2);
-
-INSERT INTO Rutinas (id_entrenador, Nombre_Ejercicio, Img_ejercicio, gif_ejercicio, grupo_muscular, descripcion) VALUES
-    (1, 'Sentadilla', '/img/squat.jpg', '/gif/squat.gif', 'Piernas', 'Ejercicio básico piernas'),
-    (1, 'Press banca', '/img/bench.jpg', '/gif/bench.gif', 'Pecho', 'Fuerza superior'),
-    (2, 'Dominadas', '/img/pullup.jpg', '/gif/pullup.gif', 'Espalda', 'Fuerza espalda');
-
-INSERT INTO Detalle_Rutinas (id_entrenador, id_cliente, id_rutina) VALUES
-    (1, 1, 1),
->>>>>>> 3b691da60c4b3d2656da619432baac776f51a10d
     (1, 2, 2),
     (2, 3, 3);
 INSERT INTO Usuarios (id_persona, password_hash, role)
@@ -469,9 +438,6 @@ EXCEPTION
 WHEN OTHERS THEN RAISE EXCEPTION 'Error al registrar persona y cliente: %',
 SQLERRM;
 END;
-<<<<<<< HEAD
-$$;
-=======
 $$ LANGUAGE plpgsql;
 
 
@@ -529,4 +495,3 @@ BEGIN
     WHERE id_persona = p_id_persona;
 END;
 $$;
->>>>>>> 3b691da60c4b3d2656da619432baac776f51a10d
