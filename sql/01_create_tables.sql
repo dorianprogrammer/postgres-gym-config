@@ -87,13 +87,37 @@ CREATE TABLE usuarios (
 CREATE TABLE monto_mensual_cliente (
     id SERIAL PRIMARY KEY,
     id_cliente INT REFERENCES cliente(id) ON DELETE CASCADE,
-    monto NUMERIC(10, 2) NOT NULL, -- Use NUMERIC for precise monetary values
+    monto NUMERIC(10, 2) NOT NULL,
     moneda VARCHAR(10) DEFAULT 'CRC',
     fecha_inicio DATE NOT NULL,
-    fecha_fin DATE, -- NULL means it's still in effect
+    fecha_fin DATE,
     activo BOOLEAN DEFAULT true
 );
 
+CREATE TABLE metodo_pago (
+    id SERIAL PRIMARY KEY,
+    descripcion VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE pago_cliente (
+    id SERIAL PRIMARY KEY,
+    id_cliente INT NOT NULL REFERENCES cliente(id) ON DELETE CASCADE,
+    id_monto_mensual INT REFERENCES monto_mensual_cliente(id),
+    fecha_pago TIMESTAMP NOT NULL DEFAULT NOW(),
+    monto_pagado NUMERIC(10, 2) NOT NULL,
+    id_metodo_pago INT NOT NULL REFERENCES metodo_pago(id),
+    observaciones TEXT,
+    registrado_por INT REFERENCES usuarios(id), -- JUST IN CASE
+    confirmado BOOLEAN DEFAULT true,
+    metadata JSONB -- JUST IN CASE: for SINPE ref, bank name, etc.
+);
+
+CREATE INDEX idx_pago_cliente_cliente ON pago_cliente(id_cliente);
+CREATE INDEX idx_pago_cliente_fecha ON pago_cliente(fecha_pago);
+CREATE INDEX idx_pago_cliente_metodo ON pago_cliente(id_metodo_pago);
+
+CREATE UNIQUE INDEX unico_pago_diario
+ON pago_cliente (id_cliente, date(fecha_pago));
 
 CREATE UNIQUE INDEX unico_monto_activo_por_cliente
 ON monto_mensual_cliente (id_cliente)

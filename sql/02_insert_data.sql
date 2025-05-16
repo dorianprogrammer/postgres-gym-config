@@ -100,3 +100,5 @@ VALUES
 (12, 18000.00, '2023-01-10'),
 (13, 18000.00, '2023-01-10');
 
+INSERT INTO metodo_pago (descripcion)
+VALUES ('Efectivo'), ('SINPE'), ('Tarjeta de Crédito/Débito');
